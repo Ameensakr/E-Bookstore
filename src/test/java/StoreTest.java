@@ -26,6 +26,7 @@ public class StoreTest {
     }
 
     @Test
+    @DisplayName("Buy Paper Book")
     public void testBuyPaperBook() throws Exception {
             store.Buy("ISBN-PAPER", 2, "user@example.com", "123 Main St");
             assertEquals(3, paperBook.getQuantity());
@@ -33,6 +34,7 @@ public class StoreTest {
     }
 
     @Test
+    @DisplayName("But E-Book")
     public void testBuyEBook() throws Exception {
             store.Buy("ISBN-EBOOK", 1, "user@example.com", null);
             assertTrue(store.inventory.Books.contains(eBook));
@@ -50,6 +52,7 @@ public class StoreTest {
     }
 
     @Test
+    @DisplayName("Remove out dated books")
     public void testRemoveOutdatedBooks() {
         paperBook.setPublishDate(LocalDate.now().minusYears(6));
         store.inventory.removeOutDatedBooks();
@@ -57,6 +60,7 @@ public class StoreTest {
     }
 
     @Test
+    @DisplayName("Add book with negative price")
     public void testAddBookWithNegativePrice() {
         try {
             store.inventory.addBook(new PaperBook(-10.0, "ISBN-NEGATIVE", "Negative Price Book", 5));
@@ -66,6 +70,7 @@ public class StoreTest {
     }
 
     @Test
+    @DisplayName("Add book with empty ISBN")
     public void testAddBookWithEmptyISBN() {
         try {
             store.inventory.addBook(new PaperBook(10.0, "", "Empty ISBN Book", 5));
@@ -75,6 +80,7 @@ public class StoreTest {
     }
 
     @Test
+    @DisplayName("Buy non existence book")
     public void testBuyNonExistentBook() {
         try {
             store.Buy("ISBN-NOTFOUND", 1, "user@example.com", null);
@@ -84,12 +90,14 @@ public class StoreTest {
     }
 
     @Test
+    @DisplayName("Remove out dated books when non exist")
     public void testRemoveOutdatedBooksWhenNoneExist() {
         store.inventory.removeOutDatedBooks();
         assertEquals(3, store.inventory.Books.size());
     }
 
     @Test
+    @DisplayName("Remove book from stock")
     public void testRemoveBookFromStock() {
         store.inventory.remove(paperBook);
         assertFalse(store.inventory.Books.contains(paperBook));
